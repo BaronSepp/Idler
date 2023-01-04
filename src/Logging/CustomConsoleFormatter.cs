@@ -56,9 +56,7 @@ public sealed class CustomConsoleFormatter : ConsoleFormatter, IDisposable
 	}
 
 	private DateTimeOffset GetCurrentDateTime()
-	{
-		return _loggerOptions.UseUtcTimestamp ? DateTimeOffset.UtcNow : DateTimeOffset.Now;
-	}
+		=> _loggerOptions.UseUtcTimestamp ? DateTimeOffset.UtcNow : DateTimeOffset.Now;
 
 	private void ReloadLoggerOptions(LoggerOptions options)
 	{
