@@ -1,4 +1,4 @@
-namespace Idler.Options;
+namespace Dev.Sepp.Idler.Console.Options;
 
 public sealed class ApplicationOptions
 {

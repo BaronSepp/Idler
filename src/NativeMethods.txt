@@ -1,3 +1,2 @@
-﻿ShowWindow
+ShowWindow
 SendInput
-GetCursorPos

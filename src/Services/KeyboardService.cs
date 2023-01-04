@@ -1,4 +1,4 @@
-using Idler.Options;
+using Dev.Sepp.Idler.Console.Options;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 
-namespace Idler.Services;
+namespace Dev.Sepp.Idler.Console.Services;
 
 public sealed class KeyboardService : BackgroundService
 {

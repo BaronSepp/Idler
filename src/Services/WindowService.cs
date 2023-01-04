@@ -1,4 +1,4 @@
-using Idler.Options;
+using Dev.Sepp.Idler.Console.Options;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 
-namespace Idler.Services;
+namespace Dev.Sepp.Idler.Console.Services;
 
 public sealed class WindowService : BackgroundService
 {
@@ -53,6 +53,6 @@ public sealed class WindowService : BackgroundService
 
 		PInvoke.ShowWindow(handle, SHOW_WINDOW_CMD.SW_SHOWMINIMIZED);
 		await Task.Delay(_options.WindowStateDelay, cancellationToken);
-		PInvoke.ShowWindow(handle, SHOW_WINDOW_CMD.SW_SHOWMAXIMIZED);
+		PInvoke.ShowWindow(handle, SHOW_WINDOW_CMD.SW_RESTORE);
 	}
 }

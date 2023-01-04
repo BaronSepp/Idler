@@ -1,11 +1,12 @@
-using Idler.Options;
-using Idler.Services;
+using Dev.Sepp.Idler.Console.Logging;
+using Dev.Sepp.Idler.Console.Options;
+using Dev.Sepp.Idler.Console.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Idler;
+namespace Dev.Sepp.Idler.Console;
 
 public static class Program
 {
@@ -48,11 +49,13 @@ public static class Program
 			})
 			.ConfigureLogging(log =>
 			{
-				log.ClearProviders();
-				log.AddSimpleConsole(c =>
+				log.AddConsole(options => options.FormatterName = nameof(CustomConsoleFormatter));
+				log.AddConsoleFormatter<CustomConsoleFormatter, LoggerOptions>(options =>
 				{
-					c.TimestampFormat = "HH:mm:ss ";
-					c.SingleLine = true;
+					options.TimestampFormat = "HH:mm:ss.ff";
+					options.IncludeScopes = false;
+					options.UseUtcTimestamp = false;
+					options.UseColor = false;
 				});
 			})
 			.ConfigureServices((host, services) =>

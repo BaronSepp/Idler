@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Idler", "src\Idler.csproj", "{2FB1A3FB-CA6F-49E0-A810-22B1D25A3008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dev.Sepp.Idler.Console", "src\Dev.Sepp.Idler.Console.csproj", "{2FB1A3FB-CA6F-49E0-A810-22B1D25A3008}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution", ".Solution", "{2FDA4A02-8320-4E88-B0C0-6FA2C914F996}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution", ".Solution", "{
 		NuGet.Config = NuGet.Config
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.Sepp.Idler.Tests", "Dev.Sepp.Idler.Tests\Dev.Sepp.Idler.Tests.csproj", "{F910622D-1588-4853-8125-C0A7CF3E44E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
