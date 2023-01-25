@@ -26,24 +26,29 @@ public static class Program
 			{
 				app.AddCommandLine(args, new Dictionary<string, string>
 				{
-					{ "-ki", "Application:KeyboardInterval" },
-					{ "--KeyboardInterval", "Application:KeyboardInterval" },
-					{ "-kk", "Application:KeyboardKey" },
-					{ "--KeyboardKey", "Application:KeyboardKey" },
+					{ "-st", "Application:StartTime" },
+					{ "--StartTime", "Application:StartTime" },
+					{ "-et", "Application:EndTime" },
+					{ "--EndTime", "Application:EndTime" },
 
-					{ "-mi", "Application:MouseInterval" },
-					{ "--MouseInterval", "Application:MouseInterval" },
-					{ "-mh", "Application:MouseHorizontalShift" },
-					{ "--MouseHorizontalShift", "Application:MouseHorizontalShift" },
-					{ "-mv", "Application:MouseVerticalShift" },
-					{ "--MouseVerticalShift", "Application:MouseVerticalShift" },
+					{ "-ki", "Keyboard:Interval" },
+					{ "--KeyboardInterval", "Keyboard:Interval" },
+					{ "-kk", "Keyboard:Key" },
+					{ "--KeyboardKey", "Keyboard:Key" },
 
-					{ "-wi", "Application:WindowInterval" },
-					{ "--WindowInterval", "Application:WindowInterval" },
-					{ "-ws", "Application:WindowStateDelay" },
-					{ "--WindowStateDelay", "Application:WindowStateDelay" },
-					{ "-wn", "Application:WindowProcessName" },
-					{ "--WindowProcessName", "Application:WindowProcessName" }
+					{ "-mi", "Mouse:Interval" },
+					{ "--MouseInterval", "Mouse:Interval" },
+					{ "-mh", "Mouse:HorizontalShift" },
+					{ "--MouseHorizontalShift", "Mouse:HorizontalShift" },
+					{ "-mv", "Mouse:VerticalShift" },
+					{ "--MouseVerticalShift", "Mouse:VerticalShift" },
+
+					{ "-wi", "Window:Interval" },
+					{ "--WindowInterval", "Window:Interval" },
+					{ "-ws", "Window:StateDelay" },
+					{ "--WindowStateDelay", "Window:StateDelay" },
+					{ "-wn", "Window:ProcessName" },
+					{ "--WindowProcessName", "Window:ProcessName" }
 				});
 				app.AddJsonFile("appsettings.json");
 			})
@@ -52,16 +57,17 @@ public static class Program
 				log.AddConsole(options => options.FormatterName = nameof(CustomConsoleFormatter));
 				log.AddConsoleFormatter<CustomConsoleFormatter, LoggerOptions>(options =>
 				{
-					options.TimestampFormat = "HH:mm:ss.ff";
-					options.IncludeScopes = false;
-					options.UseUtcTimestamp = false;
-					options.UseColor = false;
+					options.TimestampFormat = "HH:mm:ss";
+					options.UseColor = true;
 				});
 			})
 			.ConfigureServices((host, services) =>
 			{
 				services.AddOptions();
 				services.Configure<ApplicationOptions>(host.Configuration.GetRequiredSection(ApplicationOptions.Section));
+				services.Configure<KeyboardOptions>(host.Configuration.GetRequiredSection(KeyboardOptions.Section));
+				services.Configure<MouseOptions>(host.Configuration.GetRequiredSection(MouseOptions.Section));
+				services.Configure<WindowOptions>(host.Configuration.GetRequiredSection(WindowOptions.Section));
 
 				services.AddHostedService<KeyboardService>();
 				services.AddHostedService<MouseService>();

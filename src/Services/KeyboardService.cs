@@ -11,17 +11,19 @@ namespace Dev.Sepp.Idler.Console.Services;
 public sealed class KeyboardService : BackgroundService
 {
 	private readonly ILogger<KeyboardService> _logger;
-	private readonly ApplicationOptions _options;
+	private readonly ApplicationOptions _applicationOptions;
+	private readonly KeyboardOptions _keyboardOptions;
 
-	public KeyboardService(ILogger<KeyboardService> logger, IOptions<ApplicationOptions> options)
+	public KeyboardService(ILogger<KeyboardService> logger, IOptions<KeyboardOptions> keyboardOptions, IOptions<ApplicationOptions> applicationOptions)
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
-		_options = options.Value ?? throw new ArgumentNullException(nameof(options));
+		_applicationOptions = applicationOptions.Value ?? throw new ArgumentNullException(nameof(applicationOptions));
+		_keyboardOptions = keyboardOptions.Value ?? throw new ArgumentNullException(nameof(keyboardOptions));
 	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		if (_options.KeyboardInterval <= 0)
+		if (_keyboardOptions.Interval <= 0)
 		{
 			return;
 		}
@@ -30,14 +32,20 @@ public sealed class KeyboardService : BackgroundService
 		{
 			type = INPUT_TYPE.INPUT_KEYBOARD
 		};
-		input.Anonymous.ki.wScan = _options.KeyboardKey;
+		input.Anonymous.ki.wScan = _keyboardOptions.Key;
 		input.Anonymous.ki.dwFlags = KEYBD_EVENT_FLAGS.KEYEVENTF_SCANCODE;
 
 		while (stoppingToken.IsCancellationRequested is false)
 		{
+			await Task.Delay(_keyboardOptions.Interval, stoppingToken);
+
+			if (_applicationOptions.IsItTimeToIdle() is false)
+			{
+				continue;
+			}
+
 			ManipulateKeyboard(input);
-			_logger.LogInformation("Sent input of key 0x{Key} to system.", _options.KeyboardKey.ToString("X2"));
-			await Task.Delay(_options.KeyboardInterval, stoppingToken);
+			_logger.LogInformation("Sent key 0x{Key} input to system.", _keyboardOptions.Key.ToString("X2"));
 		}
 	}
 
